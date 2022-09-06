@@ -17,8 +17,18 @@ const useField = (type) => {
 
 const useCountry = (name) => {
   const [country, setCountry] = useState(null)
+  const url = `https://restcountries.com/v3.1/name/${name}?fullText=true`
 
-  useEffect(() => {})
+  useEffect(() => {
+    /* https://www.robinwieruch.de/react-hooks-fetch-data/ */
+    async function fetchData() {
+      try {
+        const response = await axios.get(url)
+        setCountry(response.data[0]);
+      } catch (err) {} /* seems to always print the 404 to console anyways :/ */
+    }
+    fetchData()
+  }, [url])
 
   return country
 }
